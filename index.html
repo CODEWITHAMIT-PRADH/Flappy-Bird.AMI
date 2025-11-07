@@ -22,6 +22,21 @@
             padding: 10px;
         }
 
+        /* AMI Edition Logo */
+        #ami-logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
+            z-index: 15;
+        }
+---------------------
         #game-container {
             position: relative;
             width: 100%;
@@ -138,6 +153,11 @@
     </style>
 </head>
 <body>
+    
+       <div id="game-container">
+        <div id="ami-logo">AMI Edition</div>
+
+           
     <div id="game-container">
         <canvas id="game-canvas" width="270" height="480"></canvas> <!-- Changed width for 9:16 ratio -->
         <div id="score-display">0</div>
