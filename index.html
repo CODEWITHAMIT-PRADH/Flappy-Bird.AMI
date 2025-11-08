@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -167,7 +167,7 @@
            
     <div id="game-container">
         <canvas id="game-canvas" width="270" height="480"></canvas> <!-- Changed width for 9:16 ratio -->
-        <div id="score-display">0</div>
+<!--      <div id="score-display">0</div>
         
         <div id="start-screen">
             <h1>Flappy Bird</h1>
@@ -488,4 +488,883 @@
         loop();
     </script>
 </body>
-</html>
+</html> -->
+
+           <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="YuAirZXGGf63M2OhxePBQl9VcwaQlilNhT8Sjve8cQs" />
+    <meta name="description" content="Play the classic Flappy Bird game online for FREE. No download needed! Navigate the bird through pipes, challenge your friends, and beat your high score in this addictive browser game.">
+    <meta name="keywords" content="flappy bird, flappy bird game, play flappy bird online, free online game, flappy bird unblocked, browser game, tap to fly, flappy bird high score, flappy bird ami, no download game">
+    <title>Flappy Bird AMI - Play Free Online Flappy Bird Game in Your Browser</title>
+
+    <!-- AdSense Code (Replace with your own) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(to bottom, #87CEEB, #1E90FF);
+            overflow-x: hidden;
+            padding: 10px;
+            color: #333;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 15px;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: white;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* AMI Edition Logo */
+        #ami-logo {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 5px;
+            z-index: 15;
+        }
+
+        #game-container {
+            position: relative;
+            width: 100%;
+            max-width: 270px;
+            height: 480px;
+            border: 2px solid #333;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            margin-bottom: 15px;
+        }
+
+        #game-canvas {
+            background-color: #70c5ce;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+        #score-display {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 40px;
+            font-weight: bold;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+        }
+
+        #start-screen, #game-over-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            z-index: 20;
+            padding: 20px;
+            text-align: center;
+        }
+
+        #game-over-screen {
+            display: none;
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #f1c40f;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+            font-weight: bold;
+            color: #333;
+        }
+
+        button:hover {
+            background-color: #f39c12;
+            transform: scale(1.05);
+        }
+
+        #instructions {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+            line-height: 1.5;
+            max-width: 80%;
+        }
+
+        #controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        #high-score {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #f1c40f;
+        }
+
+        .game-stats {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 270px;
+            margin-bottom: 10px;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 8px 15px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .ad-container {
+            width: 100%;
+            max-width: 320px;
+            margin: 15px 0;
+            text-align: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .ad-label {
+            font-size: 12px;
+            color: white;
+            margin-bottom: 5px;
+            opacity: 0.7;
+        }
+
+        .footer {
+            margin-top: 15px;
+            text-align: center;
+            color: white;
+            font-size: 12px;
+            opacity: 0.8;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        .footer a {
+            color: #f1c40f;
+            text-decoration: none;
+        }
+
+        .difficulty-selector {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .difficulty-btn {
+            padding: 5px 10px;
+            font-size: 12px;
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .difficulty-btn.active {
+            background-color: #f1c40f;
+            color: #333;
+        }
+
+        .power-ups {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            justify-content: center;
+        }
+
+        .power-up-btn {
+            padding: 5px 10px;
+            font-size: 12px;
+            background-color: rgba(52, 152, 219, 0.7);
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .power-up-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Mobile-specific adjustments */
+        @media (max-width: 480px) {
+            #game-container {
+                max-width: 100%;
+                height: 70vh;
+                max-height: 500px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+            
+            button {
+                font-size: 16px;
+                padding: 8px 16px;
+            }
+            
+            #instructions {
+                font-size: 13px;
+            }
+            
+            .game-stats, .ad-container, .footer {
+                max-width: 100%;
+            }
+        }
+
+        @media (max-height: 700px) {
+            #game-container {
+                height: 60vh;
+            }
+        }
+        
+        /* Coin animation */
+        @keyframes coinSpin {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+        
+        .coin {
+            animation: coinSpin 2s infinite linear;
+        }
+    </style>
+</head>
+<body>
+    <div id="ami-logo">AMI Edition</div>
+
+    <div class="header">
+        <h1>Flappy Bird AMI</h1>
+        <p>Classic arcade fun - completely free!</p>
+    </div>
+
+    <div class="game-stats">
+        <div>Score: <span id="current-score">0</span></div>
+        <div>Best: <span id="best-score">0</span></div>
+        <div>Coins: <span id="coin-count">0</span></div>
+    </div>
+
+    <div id="game-container">
+        <canvas id="game-canvas" width="270" height="480"></canvas>
+        <div id="score-display">0</div>
+        
+        <div id="start-screen">
+            <h1>Flappy Bird</h1>
+            <div id="controls">
+                <button id="start-button">Start Game</button>
+            </div>
+            <div class="difficulty-selector">
+                <button class="difficulty-btn active" data-difficulty="easy">Easy</button>
+                <button class="difficulty-btn" data-difficulty="medium">Medium</button>
+                <button class="difficulty-btn" data-difficulty="hard">Hard</button>
+            </div>
+            <div id="instructions">
+                <p>Tap or press SPACE/UP to flap</p>
+                <p>Avoid the pipes and don't hit the ground!</p>
+            </div>
+            <div id="high-score">High Score: 0</div>
+        </div>
+        
+        <div id="game-over-screen">
+            <h1>Game Over</h1>
+            <p id="final-score">Score: 0</p>
+            <div id="controls">
+                <button id="restart-button">Play Again</button>
+            </div>
+            <div id="high-score-end">High Score: 0</div>
+            <div class="power-ups">
+                <button class="power-up-btn" id="double-coins" disabled>2x Coins (10)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ad Container -->
+    <div class="ad-container">
+        <div class="ad-label">Advertisement</div>
+        <!-- AdSense Ad Unit -->
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="XXXXXXXXXX"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
+    <div class="footer">
+        <p>Enjoying the game? <a href="#" id="share-btn">Share with friends</a></p>
+        <p>Flappy Bird AMI &copy; 2023 - Free Online Game</p>
+    </div>
+
+    <script>
+        // Game variables
+        const canvas = document.getElementById('game-canvas');
+        const ctx = canvas.getContext('2d');
+        const scoreDisplay = document.getElementById('score-display');
+        const currentScoreDisplay = document.getElementById('current-score');
+        const bestScoreDisplay = document.getElementById('best-score');
+        const coinCountDisplay = document.getElementById('coin-count');
+        const startScreen = document.getElementById('start-screen');
+        const gameOverScreen = document.getElementById('game-over-screen');
+        const finalScore = document.getElementById('final-score');
+        const startButton = document.getElementById('start-button');
+        const restartButton = document.getElementById('restart-button');
+        const highScoreDisplay = document.getElementById('high-score');
+        const highScoreEndDisplay = document.getElementById('high-score-end');
+        const difficultyButtons = document.querySelectorAll('.difficulty-btn');
+        const doubleCoinsBtn = document.getElementById('double-coins');
+        const shareBtn = document.getElementById('share-btn');
+
+        // Load images
+        const birdImg = new Image();
+        birdImg.src = 'https://iili.io/2mONmdl.md.jpg';
+
+        const pipeImg = new Image();
+        pipeImg.src = 'https://i.postimg.cc/pdBBVgZs/Pipe.png';
+
+        const bgImg = new Image();
+        bgImg.src = 'https://iili.io/2mORBt9.md.jpg';
+
+        const coinImg = new Image();
+        coinImg.src = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZmZjZjEwIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48cGF0aCBkPSJtOSAxMiAyIDIgNC00Ii8+PC9zdmc+'; // Fallback coin image
+
+        // Game state
+        let gameRunning = false;
+        let score = 0;
+        let coins = parseInt(localStorage.getItem('flappyCoins')) || 0;
+        let highScore = parseInt(localStorage.getItem('flappyHighScore')) || 0;
+        let frames = 0;
+        let imagesLoaded = 0;
+        let currentDifficulty = 'easy';
+        let doubleCoinsActive = false;
+        let imagesReady = false;
+
+        // Update displays
+        highScoreDisplay.textContent = `High Score: ${highScore}`;
+        highScoreEndDisplay.textContent = `High Score: ${highScore}`;
+        bestScoreDisplay.textContent = highScore;
+        coinCountDisplay.textContent = coins;
+
+        // Check if all images are loaded
+        function imageLoaded() {
+            imagesLoaded++;
+            if (imagesLoaded >= 3) { // We only need 3 images to be ready
+                imagesReady = true;
+                startButton.disabled = false;
+                restartButton.disabled = false;
+            }
+        }
+
+        birdImg.onload = imageLoaded;
+        pipeImg.onload = imageLoaded;
+        bgImg.onload = imageLoaded;
+        coinImg.onload = imageLoaded;
+
+        // If any image fails to load, use fallback colors
+        birdImg.onerror = function() {
+            console.log("Bird image failed to load, using fallback");
+            imageLoaded();
+        };
+        
+        pipeImg.onerror = function() {
+            console.log("Pipe image failed to load, using fallback");
+            imageLoaded();
+        };
+        
+        bgImg.onerror = function() {
+            console.log("Background image failed to load, using fallback");
+            imageLoaded();
+        };
+        
+        coinImg.onerror = function() {
+            console.log("Coin image failed to load, using fallback");
+            imageLoaded();
+        };
+
+        // Bird properties with improved physics
+        const bird = {
+            x: 50,
+            y: 150,
+            width: 34,
+            height: 24,
+            gravity: 0.25,  // Reduced gravity for slower falling
+            velocity: 0,
+            jump: -6.5,     // Adjusted jump strength
+            rotation: 0,
+            maxRotation: Math.PI/4,
+            minRotation: -Math.PI/4,
+            rotationSpeed: 0.08,
+            
+            draw: function() {
+                ctx.save();
+                ctx.translate(this.x, this.y);
+                ctx.rotate(this.rotation);
+                
+                // Draw bird (with fallback if image not loaded)
+                if (birdImg.complete && birdImg.naturalHeight !== 0) {
+                    ctx.drawImage(birdImg, -this.width/2, -this.height/2, this.width, this.height);
+                } else {
+                    // Fallback bird drawing
+                    ctx.fillStyle = '#FFD700';
+                    ctx.fillRect(-this.width/2, -this.height/2, this.width, this.height);
+                    ctx.fillStyle = '#FF6347';
+                    ctx.fillRect(this.width/2 - 5, -this.height/4, 5, 5);
+                }
+                
+                ctx.restore();
+            },
+            
+            update: function() {
+                if (gameRunning) {
+                    // Apply gravity with terminal velocity
+                    this.velocity += this.gravity;
+                    if (this.velocity > 8) this.velocity = 8; // Terminal velocity
+                    this.y += this.velocity;
+                    
+                    // Rotate bird based on velocity (smoother rotation)
+                    let targetRotation = this.velocity * this.rotationSpeed;
+                    if (targetRotation > this.maxRotation) targetRotation = this.maxRotation;
+                    if (targetRotation < this.minRotation) targetRotation = this.minRotation;
+                    
+                    // Smooth rotation
+                    this.rotation += (targetRotation - this.rotation) * 0.1;
+                    
+                    // Check for ground collision
+                    if (this.y + this.height/2 >= canvas.height - 80) {
+                        this.y = canvas.height - 80 - this.height/2;
+                        gameOver();
+                    }
+                    
+                    // Check for ceiling collision
+                    if (this.y - this.height/2 <= 0) {
+                        this.y = this.height/2;
+                        this.velocity = 0;
+                    }
+                }
+            },
+            
+            flap: function() {
+                this.velocity = this.jump;
+                this.rotation = this.minRotation; // Immediate rotation on flap
+            },
+            
+            reset: function() {
+                this.y = 150;
+                this.velocity = 0;
+                this.rotation = 0;
+            }
+        };
+
+        // Pipes properties
+        const pipes = {
+            position: [],
+            gap: 130, // Slightly larger gap for easier gameplay
+            maxYPos: -250,
+            dx: 2,
+            minGap: 120,
+            maxGap: 150,
+            
+            draw: function() {
+                for (let i = 0; i < this.position.length; i++) {
+                    let p = this.position[i];
+                    
+                    // Draw pipes (with fallback if image not loaded)
+                    if (pipeImg.complete && pipeImg.naturalHeight !== 0) {
+                        // Top pipe (flipped)
+                        ctx.save();
+                        ctx.translate(p.x + p.width/2, p.y + p.height);
+                        ctx.scale(1, -1);
+                        ctx.drawImage(pipeImg, -p.width/2, 0, p.width, p.height);
+                        ctx.restore();
+                        
+                        // Bottom pipe
+                        ctx.drawImage(pipeImg, p.x, p.y + p.height + this.gap, p.width, canvas.height);
+                    } else {
+                        // Fallback pipe drawing
+                        ctx.fillStyle = '#228B22';
+                        ctx.fillRect(p.x, p.y, p.width, p.height);
+                        ctx.fillRect(p.x, p.y + p.height + this.gap, p.width, canvas.height);
+                    }
+                    
+                    // Draw coin if exists
+                    if (p.hasCoin && !p.coinCollected) {
+                        ctx.save();
+                        ctx.translate(p.coinX + 7.5, p.coinY + 7.5);
+                        ctx.rotate(frames * 0.05); // Rotating coin effect
+                        
+                        if (coinImg.complete && coinImg.naturalHeight !== 0) {
+                            ctx.drawImage(coinImg, -7.5, -7.5, 15, 15);
+                        } else {
+                            // Fallback coin drawing
+                            ctx.fillStyle = '#FFD700';
+                            ctx.beginPath();
+                            ctx.arc(0, 0, 7.5, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                        
+                        ctx.restore();
+                    }
+                }
+            },
+            
+            update: function() {
+                if (gameRunning) {
+                    // Adjust pipe frequency based on difficulty
+                    let pipeFrequency;
+                    switch(currentDifficulty) {
+                        case 'easy': pipeFrequency = 110; break;
+                        case 'medium': pipeFrequency = 95; break;
+                        case 'hard': pipeFrequency = 80; break;
+                        default: pipeFrequency = 110;
+                    }
+                    
+                    if (frames % pipeFrequency === 0) {
+                        const hasCoin = Math.random() > 0.7; // 30% chance for coin
+                        const newPipe = {
+                            x: canvas.width,
+                            y: this.maxYPos * (Math.random() + 0.5),
+                            width: 52,
+                            height: 320,
+                            scored: false,
+                            hasCoin: hasCoin,
+                            coinCollected: false,
+                            coinX: 0,
+                            coinY: 0
+                        };
+                        
+                        if (hasCoin) {
+                            newPipe.coinX = newPipe.x + newPipe.width/2 - 7.5;
+                            newPipe.coinY = newPipe.y + newPipe.height + this.gap/2 - 7.5;
+                        }
+                        
+                        this.position.push(newPipe);
+                    }
+                    
+                    for (let i = 0; i < this.position.length; i++) {
+                        let p = this.position[i];
+                        
+                        // Move pipes to the left
+                        p.x -= this.dx;
+                        if (p.hasCoin && !p.coinCollected) {
+                            p.coinX = p.x + p.width/2 - 7.5;
+                        }
+                        
+                        // Check for collision with bird
+                        const birdLeft = bird.x - bird.width/2;
+                        const birdRight = bird.x + bird.width/2;
+                        const birdTop = bird.y - bird.height/2;
+                        const birdBottom = bird.y + bird.height/2;
+                        
+                        const pipeLeft = p.x;
+                        const pipeRight = p.x + p.width;
+                        const pipeGapTop = p.y + p.height;
+                        const pipeGapBottom = p.y + p.height + this.gap;
+                        
+                        if (
+                            birdRight > pipeLeft && 
+                            birdLeft < pipeRight && 
+                            (birdTop < pipeGapTop || birdBottom > pipeGapBottom)
+                        ) {
+                            gameOver();
+                        }
+                        
+                        // Check for coin collection
+                        if (p.hasCoin && !p.coinCollected) {
+                            const coinLeft = p.coinX;
+                            const coinRight = p.coinX + 15;
+                            const coinTop = p.coinY;
+                            const coinBottom = p.coinY + 15;
+                            
+                            if (
+                                birdRight > coinLeft && 
+                                birdLeft < coinRight && 
+                                birdBottom > coinTop && 
+                                birdTop < coinBottom
+                            ) {
+                                p.coinCollected = true;
+                                collectCoin();
+                            }
+                        }
+                        
+                        // Check if pipe has passed the bird and increase score
+                        if (p.x + p.width < bird.x && !p.scored) {
+                            score++;
+                            scoreDisplay.textContent = score;
+                            currentScoreDisplay.textContent = score;
+                            p.scored = true;
+                        }
+                        
+                        // Remove pipes that have gone off screen
+                        if (p.x + p.width <= 0) {
+                            this.position.shift();
+                        }
+                    }
+                }
+            },
+            
+            reset: function() {
+                this.position = [];
+            }
+        };
+
+        // Background elements
+        const background = {
+            draw: function() {
+                // Draw background (with fallback if image not loaded)
+                if (bgImg.complete && bgImg.naturalHeight !== 0) {
+                    ctx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
+                } else {
+                    // Fallback background
+                    ctx.fillStyle = '#70c5ce';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+                
+                // Ground
+                ctx.fillStyle = '#D35400';
+                ctx.fillRect(0, canvas.height - 80, canvas.width, 80);
+                
+                // Grass
+                ctx.fillStyle = '#27AE60';
+                ctx.fillRect(0, canvas.height - 80, canvas.width, 20);
+            }
+        };
+
+        // Game functions
+        function collectCoin() {
+            const coinValue = doubleCoinsActive ? 2 : 1;
+            coins += coinValue;
+            coinCountDisplay.textContent = coins;
+            localStorage.setItem('flappyCoins', coins);
+            
+            // Visual feedback for coin collection
+            // Could add particle effects here
+        }
+
+        function activateDoubleCoins() {
+            if (coins >= 10) {
+                coins -= 10;
+                coinCountDisplay.textContent = coins;
+                localStorage.setItem('flappyCoins', coins);
+                doubleCoinsActive = true;
+                doubleCoinsBtn.disabled = true;
+                doubleCoinsBtn.textContent = "2x Active!";
+                
+                // Deactivate after 30 seconds
+                setTimeout(() => {
+                    doubleCoinsActive = false;
+                    doubleCoinsBtn.disabled = coins < 10;
+                    doubleCoinsBtn.textContent = "2x Coins (10)";
+                }, 30000);
+            }
+        }
+
+        function gameOver() {
+            gameRunning = false;
+            finalScore.textContent = `Score: ${score}`;
+            
+            // Update high score
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('flappyHighScore', highScore);
+                highScoreDisplay.textContent = `High Score: ${highScore}`;
+                highScoreEndDisplay.textContent = `High Score: ${highScore}`;
+                bestScoreDisplay.textContent = highScore;
+            }
+            
+            // Enable double coins button if enough coins
+            doubleCoinsBtn.disabled = coins < 10;
+            
+            gameOverScreen.style.display = 'flex';
+        }
+
+        function resetGame() {
+            score = 0;
+            frames = 0;
+            scoreDisplay.textContent = score;
+            currentScoreDisplay.textContent = score;
+            bird.reset();
+            pipes.reset();
+            gameOverScreen.style.display = 'none';
+            doubleCoinsActive = false;
+            doubleCoinsBtn.textContent = "2x Coins (10)";
+        }
+
+        function startGame() {
+            if (!imagesReady) {
+                console.log("Images not ready yet");
+                return; // Don't start if images aren't loaded
+            }
+            
+            resetGame();
+            gameRunning = true;
+            startScreen.style.display = 'none';
+        }
+
+        function draw() {
+            background.draw();
+            pipes.draw();
+            bird.draw();
+        }
+
+        function update() {
+            bird.update();
+            pipes.update();
+            frames++;
+        }
+
+        function loop() {
+            update();
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        // Event listeners
+        startButton.addEventListener('click', startGame);
+        restartButton.addEventListener('click', startGame);
+        doubleCoinsBtn.addEventListener('click', activateDoubleCoins);
+
+        // Difficulty selection
+        difficultyButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                difficultyButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentDifficulty = this.getAttribute('data-difficulty');
+                
+                // Adjust game parameters based on difficulty
+                switch(currentDifficulty) {
+                    case 'easy':
+                        pipes.dx = 2;
+                        pipes.gap = 140;
+                        break;
+                    case 'medium':
+                        pipes.dx = 2.5;
+                        pipes.gap = 130;
+                        break;
+                    case 'hard':
+                        pipes.dx = 3;
+                        pipes.gap = 120;
+                        break;
+                }
+            });
+        });
+
+        // Share button
+        shareBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Flappy Bird AMI',
+                    text: `Check out this fun Flappy Bird game! My high score is ${highScore}. Can you beat it?`,
+                    url: window.location.href
+                })
+                .catch(err => console.log('Error sharing:', err));
+            } else {
+                // Fallback for browsers that don't support Web Share API
+                const shareText = `Check out Flappy Bird AMI! My high score is ${highScore}. Play here: ${window.location.href}`;
+                prompt('Copy to share:', shareText);
+            }
+        });
+
+        // Jump on spacebar, up arrow, or click/tap
+        document.addEventListener('keydown', function(e) {
+            if ((e.code === 'Space' || e.code === 'ArrowUp' || e.key === ' ') && gameRunning) {
+                bird.flap();
+            }
+            
+            // Start game with space/enter if on start screen
+            if ((e.code === 'Space' || e.code === 'Enter') && !gameRunning && startScreen.style.display !== 'none') {
+                startGame();
+            }
+        });
+
+        canvas.addEventListener('click', function() {
+            if (gameRunning) {
+                bird.flap();
+            }
+        });
+
+        // Touch support for mobile devices
+        canvas.addEventListener('touchstart', function(e) {
+            if (gameRunning) {
+                bird.flap();
+                e.preventDefault(); // Prevent scrolling on mobile
+            }
+        });
+
+        // Start the game loop
+        loop();
+        
+        // Force enable buttons after a timeout in case images never load
+        setTimeout(() => {
+            if (!imagesReady) {
+                console.log("Forcing image ready state");
+                imagesReady = true;
+                startButton.disabled = false;
+                restartButton.disabled = false;
+            }
+        }, 3000);
+    </script>
+</body>
+</html>             
